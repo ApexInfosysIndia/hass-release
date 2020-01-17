@@ -3,22 +3,22 @@ from pathlib import Path
 import json
 import subprocess
 
-PATH = Path(__file__).parent / '../../home-assistant/'
+PATH = Path(__file__).parent / "../../home-assistant/"
 
 
 def update_frontend_version(value):
     """Update frontend requirement."""
-    manifest_path = PATH / 'homeassistant/components/frontend/manifest.json'
+    manifest_path = PATH / "homeassistant/components/frontend/manifest.json"
     manifest = json.loads(manifest_path.read_text())
-    manifest['requirements'] = [f"home-assistant-frontend=={value}"]
+    manifest["requirements"] = [f"home-assistant-frontend=={value}"]
     manifest_path.write_text(json.dumps(manifest, indent=2))
 
 
 def gen_requirements_all():
     """Run gen_requirements_all.py."""
-    subprocess.run('script/gen_requirements_all.py', cwd=PATH)
+    subprocess.run("script/gen_requirements_all.py", cwd=PATH)
 
 
 def commit_all(message):
     """Commit all changed files."""
-    subprocess.run(['git', 'commit', '-am', message], cwd=PATH)
+    subprocess.run(["git", "commit", "-am", message], cwd=PATH)
